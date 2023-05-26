@@ -2,6 +2,7 @@
 proper formatting"""
 
 import requests
+import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -55,9 +56,13 @@ def download_data(url):
 
     return attributes
 
+def data_to_csv(data):
+    data_df = pd.DataFrame(data)  # creating new dataframe by passing data
+    data_df.to_csv('show_data.csv', index=False)  # converting data frame to csv file
 
 api_url = "http://api.tvmaze.com/singlesearch/shows?q=westworld&embed=episodes"
 data = download_data(api_url)
+data_to_csv(data)
 for episode in data:
     print(episode)
 
